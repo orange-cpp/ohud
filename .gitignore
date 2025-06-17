@@ -1,0 +1,6 @@
+/cmake-build/
+/.idea
+/out
+docs
+*.DS_Store
+/extlibs/vcpkg
