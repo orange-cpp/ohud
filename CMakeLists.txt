@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.26)
 
-option(OHUD_BUILD_EXAMPLES "Build example projects with you can learn & play" ON)
+option(OHUD_BUILD_EXAMPLES "Build example projects with you can learn & play" OFF)
 
 if (OHUD_BUILD_EXAMPLES)
     include(cmake/vcpkg.cmake)
@@ -17,6 +17,11 @@ file(GLOB_RECURSE OHUD_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/in
 add_library(ohud STATIC ${OHUD_SOURCES} ${OHUD_HEADERS})
 add_library(ohud::ohud ALIAS ohud)
 
+set_target_properties(ohud PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out/${CMAKE_BUILD_TYPE}"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out/${CMAKE_BUILD_TYPE}"
+        CXX_STANDARD 23
+        CXX_STANDARD_REQUIRED ON)
 
 target_include_directories(ohud
         PUBLIC
@@ -25,8 +30,8 @@ target_include_directories(ohud
 )
 
 if (OHUD_BUILD_EXAMPLES)
-    find_package(glfw3 CONFIG REQUIRED)
     find_package(imgui CONFIG REQUIRED)
+    add_subdirectory(examples)
 endif ()
 
 # IMGUI is being linked as submodule

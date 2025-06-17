@@ -10,8 +10,8 @@ namespace ohud
 
     CanvasBox::CanvasBox(ImVec2 top, ImVec2 bottom, const float ratio)
     {
-        top.x = bottom.x;
-        const auto height = top.y - bottom.y;
+        bottom.x = top.x;
+        const auto height = std::abs(top.y - bottom.y);
 
         top_left_corner = top - ImVec2{height / ratio, 0};
         top_right_corner = top + ImVec2{height / ratio, 0};

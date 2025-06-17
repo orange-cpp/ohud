@@ -8,17 +8,18 @@
 #include <imgui.h>
 #include <string_view>
 
-
 namespace ohud
 {
     class EntityOverlayRender
     {
     public:
         EntityOverlayRender(const ImVec2& top, const ImVec2& bottom);
-        void add2d_box(const ImColor& box_color, float thickness = 1.f) const;
-        void add_left_label(const std::string_view)
+        void add_2d_box(const ImColor& box_color, float thickness = 1.f) const;
+        void add_left_label(const ImColor& color, const std::string_view& text) const;
+        void add_right_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color, float width,
+                          float ratio, float offset = 5.f) const;
+
     private:
         CanvasBox m_canvas;
-        ImVec2
     };
 } // namespace ohud
