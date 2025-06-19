@@ -38,7 +38,7 @@ endif ()
 if (TARGET imgui)
     target_link_libraries(ohud PUBLIC imgui)
     install(TARGETS imgui
-            EXPORT omathTargets
+            EXPORT ohudTargets
             ARCHIVE DESTINATION lib
             LIBRARY DESTINATION lib
             RUNTIME DESTINATION bin)
