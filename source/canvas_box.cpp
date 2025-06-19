@@ -8,7 +8,7 @@
 namespace ohud
 {
 
-    CanvasBox::CanvasBox(ImVec2 top, ImVec2 bottom, const float ratio)
+    CanvasBox::CanvasBox(const ImVec2 top, ImVec2 bottom, const float ratio)
     {
         bottom.x = top.x;
         const auto height = std::abs(top.y - bottom.y);
