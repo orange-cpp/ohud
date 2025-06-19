@@ -43,6 +43,7 @@ namespace imgui_desktop::gui
     void MainWindow::Run()
     {
         ImColor box_color = {0.f, 0.f, 0.f, 1.f};
+        ImColor box_fill = {0.f, 0.f, 0.f, 0.f};
         ImColor bar_color = {0.f, 1.f, 0.f, 1.f};
         ImColor bar_bg_color = {0.f, 0.f, 0.f, 0.0f};
         ImColor bar_outline_color = {0.f, 0.f, 0.f, 1.f};
@@ -64,6 +65,7 @@ namespace imgui_desktop::gui
                 ImGui::SetWindowSize(ImGui::GetMainViewport()->Size);
 
                 ImGui::ColorEdit4("Box", reinterpret_cast<float*>(&box_color), ImGuiColorEditFlags_NoInputs);
+                ImGui::ColorEdit4("Box fill", reinterpret_cast<float*>(&box_fill), ImGuiColorEditFlags_NoInputs);
                 ImGui::ColorEdit4("Bar", reinterpret_cast<float*>(&bar_color), ImGuiColorEditFlags_NoInputs);
                 ImGui::ColorEdit4("Bar Background", reinterpret_cast<float*>(&bar_bg_color),
                                   ImGuiColorEditFlags_NoInputs);
@@ -79,8 +81,9 @@ namespace imgui_desktop::gui
 
             ohud::EntityOverlayRender ent({350.f, 100.f}, {350.f, 350.f});
 
-            ent.add_2d_box(box_color, 1.f);
+            ent.add_2d_box(box_color, box_fill, 1.f);
             ent.add_right_bar(bar_color, bar_outline_color, bar_bg_color, bar_width, bar_value);
+            ent.add_left_bar(bar_color, bar_outline_color, bar_bg_color, bar_width, bar_value);
             ImGui::Render();
 
             int display_w, display_h;
