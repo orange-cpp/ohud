@@ -32,7 +32,7 @@ namespace ohud
         draw_list->AddRect(bar_start, bar_start + ImVec2(width, -max_bar_height), outline_color);
     }
     void EntityOverlayRender::add_left_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color,
-                                           float width, float ratio, float offset) const
+                                           const float width, float ratio, const float offset) const
     {
         ratio = std::clamp(ratio, 0.f, 1.f);
         const auto draw_list = ImGui::GetBackgroundDrawList();
