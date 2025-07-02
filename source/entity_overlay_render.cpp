@@ -19,7 +19,7 @@ namespace ohud
         draw_list->AddConcavePolyFilled(points.data(), points.size(), fill_color);
     }
     void EntityOverlayRender::add_right_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color,
-                                            const float width, float ratio, const float offset) const
+                                            const float width, float ratio, const float offset)
     {
         ratio = std::clamp(ratio, 0.f, 1.f);
         const auto draw_list = ImGui::GetBackgroundDrawList();
@@ -30,6 +30,8 @@ namespace ohud
 
         draw_list->AddRectFilled(bar_start, bar_start + ImVec2(width, -max_bar_height * ratio), color);
         draw_list->AddRect(bar_start, bar_start + ImVec2(width, -max_bar_height), outline_color);
+
+        m_text_cursor_right.x += offset + width;
     }
     void EntityOverlayRender::add_left_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color,
                                            const float width, float ratio, const float offset) const
@@ -44,7 +46,29 @@ namespace ohud
         draw_list->AddRectFilled(bar_start, bar_start + ImVec2(width, -max_bar_height * ratio), color);
         draw_list->AddRect(bar_start, bar_start + ImVec2(width, -max_bar_height), outline_color);
     }
-    EntityOverlayRender::EntityOverlayRender(const ImVec2& top, const ImVec2& bottom): m_canvas(top, bottom)
+    void EntityOverlayRender::add_right_label(const ImColor& color, float offset, const bool outlined,
+                                              std::string_view text)
+    {
+        const auto draw_list = ImGui::GetBackgroundDrawList();
+
+        if (outlined)
+        {
+            // NOTE: Move text 1 pixel verticaly since we add outline around it
+            offset++;
+            static constexpr std::array outline_offsets = {ImVec2{-1, -1}, ImVec2{-1, 0}, ImVec2{-1, 1}, ImVec2{0, -1},
+                                                           ImVec2{0, 1},   ImVec2{1, -1}, ImVec2{1, 0},  ImVec2{1, 1}};
+
+            for (const auto& outline_offset: outline_offsets)
+                draw_list->AddText(m_text_cursor_right + ImVec2{offset, 0.f} + outline_offset,
+                                   ImColor{0.f, 0.f, 0.f, 1.f}, text.data());
+        }
+
+        draw_list->AddText(m_text_cursor_right + ImVec2{offset, 0.f}, color, text.data());
+
+        m_text_cursor_right.y += ImGui::CalcTextSize(text.data()).y;
+    }
+    EntityOverlayRender::EntityOverlayRender(const ImVec2& top, const ImVec2& bottom)
+        : m_canvas(top, bottom), m_text_cursor_right(m_canvas.top_right_corner)
     {
     }
 } // namespace ohud
