@@ -67,6 +67,20 @@ namespace ohud
 
         m_text_cursor_right.y += ImGui::CalcTextSize(text.data()).y;
     }
+    void EntityOverlayRender::add_top_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color,
+                                          float height, float ratio, float offset) const
+    {
+        ratio = std::clamp(ratio, 0.f, 1.f);
+
+        const auto draw_list = ImGui::GetBackgroundDrawList();
+        const auto max_bar_width = std::abs(m_canvas.top_left_corner.x - m_canvas.bottom_right_corner.x);
+
+        const auto bar_start = m_canvas.top_left_corner - ImVec2{0.f, offset};
+        draw_list->AddRectFilled(bar_start, bar_start + ImVec2(max_bar_width, -height), bg_color);
+
+        draw_list->AddRectFilled(bar_start, bar_start + ImVec2(max_bar_width * ratio, -height), color);
+        draw_list->AddRect(bar_start, bar_start + ImVec2(max_bar_width, -height), outline_color);
+    }
     EntityOverlayRender::EntityOverlayRender(const ImVec2& top, const ImVec2& bottom)
         : m_canvas(top, bottom), m_text_cursor_right(m_canvas.top_right_corner)
     {
