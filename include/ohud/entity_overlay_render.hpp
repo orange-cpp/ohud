@@ -34,6 +34,16 @@ namespace ohud
         }
 
         void add_right_label(const ImColor& color, float offset, bool outlined, std::string_view text);
+
+        template<typename... Args>
+        void add_top_label(const ImColor& color, const float offset, const bool outlined,
+                             std::format_string<Args...> fmt, Args&&... args)
+        {
+            const std::string label = std::vformat(fmt.get(), std::make_format_args(args...));
+
+            add_top_label(color, offset, outlined, std::string_view{label});
+        }
+
         void add_top_label(const ImColor& color, float offset, bool outlined, std::string_view text);
 
         void add_top_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color, float height,

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.26)
 
-option(OHUD_BUILD_EXAMPLES "Build example projects with you can learn & play" OFF)
+option(OHUD_BUILD_EXAMPLES "Build example projects with you can learn & play" ${PROJECT_IS_TOP_LEVEL})
 
 if (OHUD_BUILD_EXAMPLES)
     include(cmake/vcpkg.cmake)
@@ -14,16 +14,16 @@ file(GLOB_RECURSE OHUD_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/so
 file(GLOB_RECURSE OHUD_HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
 
 
-add_library(ohud STATIC ${OHUD_SOURCES} ${OHUD_HEADERS})
-add_library(ohud::ohud ALIAS ohud)
+add_library(${PROJECT_NAME} STATIC ${OHUD_SOURCES} ${OHUD_HEADERS})
+add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
-set_target_properties(ohud PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
         ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out/${CMAKE_BUILD_TYPE}"
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out/${CMAKE_BUILD_TYPE}"
         CXX_STANDARD 23
         CXX_STANDARD_REQUIRED ON)
 
-target_include_directories(ohud
+target_include_directories(${PROJECT_NAME}
         PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>   # Use this path when building the project
         $<INSTALL_INTERFACE:include>                             # Use this path when the project is installed
