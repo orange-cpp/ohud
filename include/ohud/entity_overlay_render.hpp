@@ -34,10 +34,12 @@ namespace ohud
         }
 
         void add_right_label(const ImColor& color, float offset, bool outlined, std::string_view text);
+        void add_top_label(const ImColor& color, float offset, bool outlined, std::string_view text);
 
         void add_top_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color, float height,
-                          float ratio, float offset = 5.f) const;
+                          float ratio, float offset = 5.f);
         CanvasBox m_canvas;
         ImVec2 m_text_cursor_right;
+        ImVec2 m_text_cursor_top;
     };
 } // namespace ohud

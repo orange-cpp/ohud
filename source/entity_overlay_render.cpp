@@ -67,8 +67,29 @@ namespace ohud
 
         m_text_cursor_right.y += ImGui::CalcTextSize(text.data()).y;
     }
+    void EntityOverlayRender::add_top_label(const ImColor& color, float offset, const bool outlined,
+                                            const std::string_view text)
+    {
+        const auto draw_list = ImGui::GetBackgroundDrawList();
+
+        m_text_cursor_top.y -= ImGui::CalcTextSize(text.data()).y;
+
+        if (outlined)
+        {
+            // NOTE: Move text 1 pixel verticaly since we add outline around it
+            offset++;
+            static constexpr std::array outline_offsets = {ImVec2{-1, -1}, ImVec2{-1, 0}, ImVec2{-1, 1}, ImVec2{0, -1},
+                                                           ImVec2{0, 1},   ImVec2{1, -1}, ImVec2{1, 0},  ImVec2{1, 1}};
+
+            for (const auto& outline_offset: outline_offsets)
+                draw_list->AddText(m_text_cursor_top + ImVec2{0.f, -offset} + outline_offset,
+                                   ImColor{0.f, 0.f, 0.f, 1.f}, text.data());
+        }
+
+        draw_list->AddText(m_text_cursor_top + ImVec2{0.f, -offset}, color, text.data());
+    }
     void EntityOverlayRender::add_top_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color,
-                                          float height, float ratio, float offset) const
+                                          const float height, float ratio, const float offset)
     {
         ratio = std::clamp(ratio, 0.f, 1.f);
 
@@ -80,9 +101,12 @@ namespace ohud
 
         draw_list->AddRectFilled(bar_start, bar_start + ImVec2(max_bar_width * ratio, -height), color);
         draw_list->AddRect(bar_start, bar_start + ImVec2(max_bar_width, -height), outline_color);
+
+        m_text_cursor_top.y -= offset + height;
     }
     EntityOverlayRender::EntityOverlayRender(const ImVec2& top, const ImVec2& bottom)
-        : m_canvas(top, bottom), m_text_cursor_right(m_canvas.top_right_corner)
+        : m_canvas(top, bottom), m_text_cursor_right(m_canvas.top_right_corner),
+          m_text_cursor_top(m_canvas.top_left_corner)
     {
     }
 } // namespace ohud

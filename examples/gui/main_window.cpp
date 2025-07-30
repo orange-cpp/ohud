@@ -58,6 +58,8 @@ namespace imgui_desktop::gui
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
+            ImGui::GetBackgroundDrawList()->AddRectFilled({}, ImGui::GetMainViewport()->Size, ImColor(40, 40, 40, 200));
+
             ImGui::Begin("OHUD Showcase", &m_opened,
                          ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);
             {
@@ -89,6 +91,8 @@ namespace imgui_desktop::gui
             ent.add_right_label({1.f, 0.f, 0.f, 1.f}, 3, true, "Shield: {}/125", 125);
             ent.add_right_label({1.f, 0.f, 1.f, 1.f}, 3, true, "*LOCKED*");
 
+            ent.add_top_label({1.f, 0.48f, 0.f}, 3, true, "*SCOPED*");
+            ent.add_top_label({1.f, 0.0f, 0.f}, 3, true, "*BLEEDING*");
             ImGui::Render();
 
             int display_w, display_h;
@@ -130,8 +134,7 @@ namespace imgui_desktop::gui
             int width, height;
             glfwGetWindowSize(window, &width, &height);
             const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-            glfwSetWindowPos(window, std::clamp(x + mouseDiffX, 0, mode->width - width),
-                             std::clamp(y + mouseDiffY, 0, mode->height - height));
+            glfwSetWindowPos(window, x + mouseDiffX, y + mouseDiffY);
         }
         oldMousePos = curMousePos;
     }
