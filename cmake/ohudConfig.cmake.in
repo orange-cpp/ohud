@@ -1,0 +1,5 @@
+@PACKAGE_INIT@
+include(CMakeFindDependencyMacro)
+find_dependency(imgui CONFIG)
+include("${CMAKE_CURRENT_LIST_DIR}/ohudTargets.cmake")
+check_required_components(ohud)
