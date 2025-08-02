@@ -29,9 +29,9 @@ namespace ohud
         draw_list->AddRectFilled(bar_start, bar_start + ImVec2(width, -max_bar_height), bg_color);
 
         draw_list->AddRectFilled(bar_start, bar_start + ImVec2(width, -max_bar_height * ratio), color);
-        draw_list->AddRect(bar_start, bar_start + ImVec2(width, -max_bar_height), outline_color);
+        draw_list->AddRect(bar_start-ImVec2(1.f, 0.f), bar_start + ImVec2(width, -max_bar_height), outline_color);
 
-        m_text_cursor_right.x += offset + width;
+        m_text_cursor_right.x += offset + width + 1.f;
     }
     void EntityOverlayRender::add_left_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color,
                                            const float width, float ratio, const float offset) const
@@ -44,7 +44,7 @@ namespace ohud
         draw_list->AddRectFilled(bar_start, bar_start + ImVec2(width, -max_bar_height), bg_color);
 
         draw_list->AddRectFilled(bar_start, bar_start + ImVec2(width, -max_bar_height * ratio), color);
-        draw_list->AddRect(bar_start, bar_start + ImVec2(width, -max_bar_height), outline_color);
+        draw_list->AddRect(bar_start-ImVec2(1.f, 0.f), bar_start + ImVec2(width, -max_bar_height), outline_color);
     }
     void EntityOverlayRender::add_right_label(const ImColor& color, float offset, const bool outlined,
                                               std::string_view text)
