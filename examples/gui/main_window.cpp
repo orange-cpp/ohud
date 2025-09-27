@@ -84,6 +84,7 @@ namespace imgui_desktop::gui
             ohud::EntityOverlayRender ent({350.f, 100.f}, {350.f, 350.f});
 
             ent.add_2d_box(box_color, box_fill, 1.f);
+            ent.add_cornered_2d_box(ImColor(255, 0, 255), box_fill);
             ent.add_right_bar(bar_color, bar_outline_color, bar_bg_color, bar_width, bar_value);
             ent.add_left_bar(bar_color, bar_outline_color, bar_bg_color, bar_width, bar_value);
             ent.add_top_bar(bar_color, bar_outline_color, bar_bg_color, bar_width, bar_value);

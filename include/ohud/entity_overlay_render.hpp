@@ -18,6 +18,9 @@ namespace ohud
         void add_2d_box(const ImColor& box_color, const ImColor& fill_color = ImColor{0.f, 0.f, 0.f, 0.f},
                         float thickness = 1.f) const;
 
+        void add_cornered_2d_box(const ImColor& box_color, const ImColor& fill_color = ImColor{0.f, 0.f, 0.f, 0.f},
+                                 float corner_ratio_len = 0.2f, float thickness = 1.f) const;
+
         void add_right_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color, float width,
                            float ratio, float offset = 5.f);
 
@@ -33,11 +36,11 @@ namespace ohud
             add_right_label(color, offset, outlined, std::string_view{label});
         }
 
-        void add_right_label(const ImColor& color, float offset, bool outlined, std::string_view text);
+        void add_right_label(const ImColor& color, float offset, bool outlined, const std::string_view& text);
 
         template<typename... Args>
         void add_top_label(const ImColor& color, const float offset, const bool outlined,
-                             std::format_string<Args...> fmt, Args&&... args)
+                           std::format_string<Args...> fmt, Args&&... args)
         {
             const std::string label = std::vformat(fmt.get(), std::make_format_args(args...));
 
@@ -47,7 +50,9 @@ namespace ohud
         void add_top_label(const ImColor& color, float offset, bool outlined, std::string_view text);
 
         void add_top_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color, float height,
-                          float ratio, float offset = 5.f);
+                         float ratio, float offset = 5.f);
+
+        void draw_outlined_text(const ImVec2& position, const ImColor& color, const std::string_view& text) const;
         CanvasBox m_canvas;
         ImVec2 m_text_cursor_right;
         ImVec2 m_text_cursor_top;
