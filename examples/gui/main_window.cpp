@@ -94,6 +94,7 @@ namespace imgui_desktop::gui
 
             ent.add_top_label({1.f, 0.48f, 0.f}, 3, true, "*SCOPED*");
             ent.add_top_label({1.f, 0.0f, 0.f}, 3, true, "*BLEEDING*");
+            ent.add_snap_line(ohud::SnapLineStartPosition::SCREEN_BOTTOM, ImColor(255, 0, 0), 2.f);
             ImGui::Render();
 
             int display_w, display_h;

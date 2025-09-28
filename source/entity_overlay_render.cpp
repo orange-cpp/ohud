@@ -119,8 +119,30 @@ namespace ohud
 
         m_text_cursor_top.y -= offset + height;
     }
+    void EntityOverlayRender::add_snap_line(const SnapLineStartPosition& start_pos, const ImColor& color,
+                                            const float width)
+    {
+        ImVec2 line_start;
+        const ImVec2 line_end = m_canvas.bottom_left_corner
+                                + ImVec2{m_canvas.bottom_right_corner.x - m_canvas.bottom_left_corner.x, 0.f} / 2;
+        const auto screen_size = ImGui::GetMainViewport()->Size;
+
+        switch (start_pos)
+        {
+        case SnapLineStartPosition::SCREEN_BOTTOM:
+            line_start = {screen_size.x / 2.f, screen_size.y};
+            break;
+        case SnapLineStartPosition::SCREEN_TOP:
+            line_start = {screen_size.x / 2.f, 0.f};
+            break;
+        case SnapLineStartPosition::SCREEN_CENTER:
+            line_start = screen_size / 2.f;
+            break;
+        }
+        ImGui::GetBackgroundDrawList()->AddLine(line_start, line_end, color, width);
+    }
     void EntityOverlayRender::draw_outlined_text(const ImVec2& position, const ImColor& color,
-                                                 const std::string_view& text) const
+                                                 const std::string_view& text)
     {
         const auto draw_list = ImGui::GetBackgroundDrawList();
         static constexpr std::array outline_offsets = {ImVec2{-1, -1}, ImVec2{-1, 0}, ImVec2{-1, 1}, ImVec2{0, -1},
