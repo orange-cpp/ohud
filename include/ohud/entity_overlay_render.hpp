@@ -58,7 +58,7 @@ namespace ohud
         void add_top_bar(const ImColor& color, const ImColor& outline_color, const ImColor& bg_color, float height,
                          float ratio, float offset = 5.f);
 
-        void add_snap_line(const SnapLineStartPosition& start_pos, const ImColor& color, const float width);
+        void add_snap_line(const SnapLineStartPosition& start_pos, const ImColor& color, float width);
     private:
         static void draw_outlined_text(const ImVec2& position, const ImColor& color, const std::string_view& text);
         CanvasBox m_canvas;
