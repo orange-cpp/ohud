@@ -13,3 +13,6 @@
 OHUD is a 100% independent, template imgui wrapper library that simplifies wall hacks creation.
 
 </div>
+
+> [!CAUTION]
+> OHUD IS DEPRECATED AND WILL BE NO LONGER SUPPORTED! USE `omath::hud` INSTEAD!!! [REPO LINK](https://github.com/orange-cpp/omath)
